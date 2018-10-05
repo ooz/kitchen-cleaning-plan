@@ -1,10 +1,12 @@
-# Kitchen Cleaning Plan
+# Kitchen Cleaning Plan (with German holidays)
+
+![screenshot](screenshot.png)
 
 Can be configured via URL parameters:
 
-* `early`: People who would rather be on kitchen duty in the morning
-* `night`: People who would rather be on kitchen duty in the afternoon
-* `people`: People not having a preference
+* `early`: People who would rather be on kitchen duty in the morning, comma separated
+* `night`: People who would rather be on kitchen duty in the afternoon, comma separated
+* `people`: People not having a preference, comma separated
 * `date`: If not set, takes the current year/month. Can be specified explicitly in this format: `2018-12-24` (exact day does not matter)
 
 You can bookmark and print your Kitchen Cleaning Plan!
