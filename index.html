@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Kitchen Cleaning Plan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <style>
+.noWorkday {
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  background: #AAA !important;
+}
+tr:nth-child(even) {
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  background: #EAEAEA;
+}
+tr:nth-child(odd) {
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  background: #FFF;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <noscript>
+          <h1 id="headline" class="display-2"><span class="alert-warning">Uh, please enable JavaScript!</span></h1>
+      </noscript>
+
+      <h1 style="padding:0.66em">Kitchen Cleaning Plan</h1>
+
+      <div id="cleaning-plan">
+      </div>
+    </div>
+
+    <script type="module" src="kitchen-cleaning-plan.js"></script>
+    <script type="module">
+import {
+  normalizePeople,
+  earlyNightMonthPlan
+} from './kitchen-cleaning-plan.js';
+
+function getParameters() {
+    const url = new URL(window.location.href)
+    return {
+        'early': url.searchParams.get('early') || '',
+        'night': url.searchParams.get('night') || '',
+        'people': url.searchParams.get('people') || '',
+        'date': url.searchParams.get('date') || '',
+    }
+}
+
+const PARAMETERS = getParameters()
+const NOW = PARAMETERS.date === '' ? new Date(Date.now()).toISOString().slice(0, 10) : PARAMETERS.date
+
+document.title = NOW + " | Kitchen Cleaning Plan"
+
+function get(id) {
+  return document.getElementById(id)
+}
+
+const people = normalizePeople(getParameters())
+const plan = earlyNightMonthPlan(NOW, people)
+
+const planContainer = get('cleaning-plan')
+var tableHTML = '<table class="table table-sm">'
+tableHTML += '<tr>'
+tableHTML += `<th>Day</th>`
+tableHTML += `<th>Morning</th>`
+tableHTML += `<th>Afternoon</th>`
+tableHTML += '</tr>'
+for (var d = 0; d < plan.length; d++) {
+  const day = plan[d]
+  if (day.isWorkday) {
+    tableHTML += '<tr>'
+  } else {
+    tableHTML += '<tr class="noWorkday">'
+  }
+
+      tableHTML += `<td>${day.date}, ${day.weekday}</td>`
+      tableHTML += `<td>${day.early}</td>`
+      tableHTML += `<td>${day.night}</td>`
+  tableHTML += '</tr>'
+}
+tableHTML += '</table>'
+
+planContainer.innerHTML = tableHTML
+    </script>
+  </body>
+</html>
+
