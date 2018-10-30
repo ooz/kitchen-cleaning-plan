@@ -53,6 +53,11 @@ tr:nth-child(odd) {
   font-size: 0.75rem;
   line-height: 0.75;
 }
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
     </style>
   </head>
   <body>
@@ -64,7 +69,7 @@ tr:nth-child(odd) {
       <div id="cleaning-plan">
       </div>
 
-      <p class="about">
+      <p class="about no-print">
         via
         <a href="https://github.com/ooz/kitchen-cleaning-plan">https://github.com/ooz/kitchen-cleaning-plan</a>
       </p>
