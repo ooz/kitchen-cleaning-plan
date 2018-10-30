@@ -2,6 +2,8 @@
 
 ![screenshot](screenshot.png)
 
+When printed it looks like this: [example-plan.pdf](example-plan.pdf)
+
 Can be configured via URL parameters:
 
 * `early`: People who would rather be on kitchen duty in the morning, comma separated
