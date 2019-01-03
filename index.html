@@ -38,6 +38,7 @@ tr:nth-child(odd) {
     <script type="module">
 import {
   normalizePeople,
+  splitArrayString,
   earlyNightMonthPlan
 } from './kitchen-cleaning-plan.js';
 
@@ -48,6 +49,7 @@ function getParameters() {
         'night': url.searchParams.get('night') || '',
         'people': url.searchParams.get('people') || '',
         'date': url.searchParams.get('date') || '',
+        'extra': splitArrayString(url.searchParams.get('extra') || '')
     }
 }
 
@@ -60,16 +62,25 @@ function get(id) {
   return document.getElementById(id)
 }
 
-const people = normalizePeople(getParameters())
+const people = normalizePeople(PARAMETERS)
 const plan = earlyNightMonthPlan(NOW, people)
+const extraColumns = PARAMETERS.extra
 
 const planContainer = get('cleaning-plan')
 var tableHTML = '<table class="table table-sm">'
+
+  // Table header
 tableHTML += '<tr>'
 tableHTML += `<th>Day</th>`
 tableHTML += `<th>Morning</th>`
 tableHTML += `<th>Afternoon</th>`
+for (var extra = 0; extra < extraColumns.length; extra++) {
+  tableHTML += `<th>${extraColumns[extra]}</th>`
+}
 tableHTML += '</tr>'
+
+// Table body
+const extraCells = '<td></td>'.repeat(extraColumns.length)
 for (var d = 0; d < plan.length; d++) {
   const day = plan[d]
   if (day.isWorkday) {
@@ -78,9 +89,10 @@ for (var d = 0; d < plan.length; d++) {
     tableHTML += '<tr class="noWorkday">'
   }
 
-      tableHTML += `<td>${day.date}, ${day.weekday}</td>`
-      tableHTML += `<td>${day.early}</td>`
-      tableHTML += `<td>${day.night}</td>`
+  tableHTML += `<td>${day.date}, ${day.weekday}</td>`
+  tableHTML += `<td>${day.early}</td>`
+  tableHTML += `<td>${day.night}</td>`
+  tableHTML += extraCells
   tableHTML += '</tr>'
 }
 tableHTML += '</table>'
