@@ -2,13 +2,17 @@ import { HOLIDAYS } from './holidays.js';
 import { shuffle } from './deps.js';
 
 function normalizePeople(parameters) {
-    const early = Array.from(new Set(parameters.early.split(',').map(v => v.trim()))).filter(p => p !== '')
-    const night = Array.from(new Set(parameters.night.split(',').map(v => v.trim()))).filter(p => p !== '')
+    const early = Array.from(new Set(splitArrayString(parameters.early))).filter(p => p !== '')
+    const night = Array.from(new Set(splitArrayString(parameters.night))).filter(p => p !== '')
     return {
         'early': early,
         'night': night,
-        'people': Array.from(new Set(parameters.people.split(',').map(v => v.trim()).concat(early).concat(night))).filter(p => p !== ''),
+        'people': Array.from(new Set(splitArrayString(parameters.people).concat(early).concat(night))).filter(p => p !== ''),
     }
+}
+
+function splitArrayString(a) {
+    return a.split(',').map(e => e.trim())
 }
 
 function getNrDaysInMonth(year, month) {
@@ -111,6 +115,7 @@ function earlyNightMonthPlan(roughDate, people) {
 export {
     HOLIDAYS,
     normalizePeople,
+    splitArrayString,
     getNrDaysInMonth,
     padToTwoDigits,
     pickN,
