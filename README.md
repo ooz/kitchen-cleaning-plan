@@ -10,6 +10,7 @@ Can be configured via URL parameters:
 * `night`: People who would rather be on kitchen duty in the afternoon, comma separated
 * `people`: People not having a preference, comma separated
 * `date`: If not set, takes the current year/month. Can be specified explicitly in this format: `2018-12-24` (exact day does not matter)
+* `extra`: Names of empty extra columns, comma separated
 
 You can bookmark and print your Kitchen Cleaning Plan!
 
@@ -19,5 +20,6 @@ You can bookmark and print your Kitchen Cleaning Plan!
 * Bunch of people not having preferences: https://ooz.github.io/kitchen-cleaning-plan/?people=Dunno,Dunsee,Dunhear,Dunspeak,Duncare,Someone
 * Mixed bunch of people: https://ooz.github.io/kitchen-cleaning-plan/?early=Bird,Catches,Sunrise&night=Owl,Worm,Dawn&people=Allzeit,ImmerBereit
 * Mixed bunch of people, plan for May 2018: https://ooz.github.io/kitchen-cleaning-plan/?early=Bird,Catches,Sunrise&night=Owl,Worm,Dawn&people=Allzeit,ImmerBereit&date=2018-05-23
+* Add extra columns for extra tasks: https://ooz.github.io/kitchen-cleaning-plan/?people=Alice,Bob,Cell,Derek,Emmy,Franz&extra=Water%20Dispenser,Trash
 
 ## [Tests](https://ooz.github.io/kitchen-cleaning-plan/test.html)
