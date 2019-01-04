@@ -3,8 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>Kitchen Cleaning Plan</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <style>
+body {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1.1rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-sizing: border-box;
+}
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  max-width: 1140px;
+}
+table, th, td {
+  border: 1px solid #dee2e6;
+}
+th, td {
+  width: 33.33%;
+  padding-left: 5px;
+}
+
 .noWorkday {
   -webkit-print-color-adjust: exact;
   color-adjust: exact;
@@ -20,6 +45,19 @@ tr:nth-child(odd) {
   color-adjust: exact;
   background: #FFF;
 }
+
+.about {
+  margin-top:5px;
+  padding:0;
+  float:right;
+  font-size: 0.75rem;
+  line-height: 0.75;
+}
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
     </style>
   </head>
   <body>
@@ -28,10 +66,13 @@ tr:nth-child(odd) {
           <h1 id="headline" class="display-2"><span class="alert-warning">Uh, please enable JavaScript!</span></h1>
       </noscript>
 
-      <a href="https://github.com/ooz/kitchen-cleaning-plan"><h1 style="padding:0.66em">Kitchen Cleaning Plan</h1></a>
-
       <div id="cleaning-plan">
       </div>
+
+      <p class="about no-print">
+        source:
+        <a href="https://github.com/ooz/kitchen-cleaning-plan">https://github.com/ooz/kitchen-cleaning-plan</a>
+      </p>
     </div>
 
     <script type="module" src="kitchen-cleaning-plan.js"></script>
@@ -67,9 +108,7 @@ const plan = earlyNightMonthPlan(NOW, people)
 const extraColumns = PARAMETERS.extra
 
 const planContainer = get('cleaning-plan')
-var tableHTML = '<table class="table table-sm">'
-
-  // Table header
+var tableHTML = '<table>'
 tableHTML += '<tr>'
 tableHTML += `<th>Day</th>`
 tableHTML += `<th>Morning</th>`
