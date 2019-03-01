@@ -8,6 +8,7 @@ import {
   getNrDaysInMonth,
   padToTwoDigits,
   pickN,
+  range,
   emptyDayPlan,
   emptyMonthPlan,
   getNrWorkDaysInPlan,
@@ -76,6 +77,20 @@ describe('padToTwoDigits', function () {
   })
 });
 
+describe('range', function () {
+  it('should be empty if no overlap', function () {
+    var numbers = range(2, 2)
+    chai.expect(numbers.length).to.equal(0)
+  })
+  it('should include low end, exclude high end', function () {
+    var numbers = range(0, 10)
+    chai.expect(numbers.length).to.equal(10)
+    for (var i = 0; i < 10; i++) {
+      chai.expect(numbers[i]).to.equal(i)
+    }
+  })
+});
+
 describe('pickN', function () {
   it('should repeat people if not enough available', function () {
     var picks = pickN(30, ['foo', 'bar'])
@@ -86,6 +101,14 @@ describe('pickN', function () {
     var picks = pickN(5, ['foo', 'bar', 'baz', 'bob', 'beb'])
     chai.expect(picks.length).to.equal(5)
     chai.expect(picks).to.include('foo', 'bar', 'baz', 'bob', 'beb')
+  })
+
+  it('should at least pick everyone before repeating', function () {
+    for (var run = 0; run < 100; run++) { // Need to repeat this a couple of times, otherwise all people might be picked by RNG
+      var picks = pickN(7, ['foo', 'bar', 'baz', 'bob', 'beb'])
+      chai.expect(picks.length).to.equal(7)
+      chai.expect(picks).to.include('foo', 'bar', 'baz', 'bob', 'beb')
+    }
   })
 
   it('should pick ? if no people are provided', function () {

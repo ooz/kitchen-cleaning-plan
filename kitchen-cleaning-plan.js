@@ -29,10 +29,28 @@ function pickN(n, from) {
         return [...Array(n).keys()].map(_ => '?')
     }
 
+    // Pad
     while (candidates.length < n) {
         candidates = candidates.concat(from.slice())
     }
-    return shuffle([...Array(candidates.length).keys()]).slice(0, n).map(position => candidates[position])
+
+    var fullRepetitions = Math.floor(n / from.length)
+    var nrPeopleNeededToPad = n - fullRepetitions * from.length
+    var indicesToPick = range(0, fullRepetitions * from.length) // Everyone at least equal times
+                        .concat(
+                            shuffle(range(fullRepetitions * from.length, (fullRepetitions + 1) * from.length))
+                            .slice(0, nrPeopleNeededToPad)) // Pad with random people only once
+    indicesToPick = shuffle(indicesToPick)
+
+    return indicesToPick.map(position => candidates[position])
+}
+
+function range(lowIncluding, highExcluding) {
+    var list = []
+    for (var i = lowIncluding; i < highExcluding; i++) {
+        list.push(i);
+    }
+    return list
 }
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -119,6 +137,7 @@ export {
     getNrDaysInMonth,
     padToTwoDigits,
     pickN,
+    range,
     emptyDayPlan,
     emptyMonthPlan,
     getNrWorkDaysInPlan,
