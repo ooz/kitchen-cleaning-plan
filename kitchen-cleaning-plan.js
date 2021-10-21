@@ -24,7 +24,7 @@ function padToTwoDigits(digit) {
 }
 
 function pickN(n, from) {
-    var candidates = from.slice()
+    let candidates = from.slice()
     if (from.length === 0) {
         return [...Array(n).keys()].map(_ => '?')
     }
@@ -34,9 +34,9 @@ function pickN(n, from) {
         candidates = candidates.concat(from.slice())
     }
 
-    var fullRepetitions = Math.floor(n / from.length)
-    var nrPeopleNeededToPad = n - fullRepetitions * from.length
-    var indicesToPick = range(0, fullRepetitions * from.length) // Everyone at least equal times
+    let fullRepetitions = Math.floor(n / from.length)
+    let nrPeopleNeededToPad = n - fullRepetitions * from.length
+    let indicesToPick = range(0, fullRepetitions * from.length) // Everyone at least equal times
                         .concat(
                             shuffle(range(fullRepetitions * from.length, (fullRepetitions + 1) * from.length))
                             .slice(0, nrPeopleNeededToPad)) // Pad with random people only once
@@ -46,8 +46,8 @@ function pickN(n, from) {
 }
 
 function range(lowIncluding, highExcluding) {
-    var list = []
-    for (var i = lowIncluding; i < highExcluding; i++) {
+    let list = []
+    for (let i = lowIncluding; i < highExcluding; i++) {
         list.push(i);
     }
     return list
@@ -88,9 +88,9 @@ function filledMonthPlan(roughDate, people) {
     const plan = emptyMonthPlan(roughDate)
     const nrCleaningTasks = 2 * getNrWorkDaysInPlan(plan)
     const cleaners = pickN(nrCleaningTasks, people.people)
-    var cleaner = 0
-    for (var d = 0; d < plan.length; d++) {
-        var day = plan[d]
+    let cleaner = 0
+    for (let d = 0; d < plan.length; d++) {
+        let day = plan[d]
         if (day.isWorkday) {
             day.early = cleaners[cleaner++]
             day.night = cleaners[cleaner++]
@@ -100,15 +100,15 @@ function filledMonthPlan(roughDate, people) {
 }
 
 function earlyNightMonthPlan(roughDate, people) {
-    var plan = filledMonthPlan(roughDate, people)
+    let plan = filledMonthPlan(roughDate, people)
 
-    for (var d = 0; d < plan.length; d++) {
-        var day = plan[d]
+    for (let d = 0; d < plan.length; d++) {
+        let day = plan[d]
         if (day.isWorkday && people.early.includes(day.night)) {
-            for (var o = 0; o < plan.length; o++) {
-                var changeDay = plan[o]
+            for (let o = 0; o < plan.length; o++) {
+                let changeDay = plan[o]
                 if (changeDay.isWorkday && !people.early.includes(changeDay.early)) {
-                    var tmp = day.night
+                    let tmp = day.night
                     day.night = changeDay.early
                     changeDay.early = tmp
                 }
@@ -116,10 +116,10 @@ function earlyNightMonthPlan(roughDate, people) {
         }
 
         if (day.isWorkday && people.night.includes(day.early)) {
-            for (var o = 0; o < plan.length; o++) {
-                var changeDay = plan[o]
+            for (let o = 0; o < plan.length; o++) {
+                let changeDay = plan[o]
                 if (changeDay.isWorkday && !people.night.includes(changeDay.night)) {
-                    var tmp = day.early
+                    let tmp = day.early
                     day.early = changeDay.night
                     changeDay.night = tmp
                 }
