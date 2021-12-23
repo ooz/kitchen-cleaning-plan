@@ -89,8 +89,7 @@ function filledMonthPlan(roughDate, people) {
     const nrCleaningTasks = 2 * getNrWorkDaysInPlan(plan)
     const cleaners = pickN(nrCleaningTasks, people.people)
     let cleaner = 0
-    for (let d = 0; d < plan.length; d++) {
-        let day = plan[d]
+    for (let day of plan) {
         if (day.isWorkday) {
             day.early = cleaners[cleaner++]
             day.night = cleaners[cleaner++]
@@ -102,11 +101,9 @@ function filledMonthPlan(roughDate, people) {
 function earlyNightMonthPlan(roughDate, people) {
     let plan = filledMonthPlan(roughDate, people)
 
-    for (let d = 0; d < plan.length; d++) {
-        let day = plan[d]
+    for (let day of plan) {
         if (day.isWorkday && people.early.includes(day.night)) {
-            for (let o = 0; o < plan.length; o++) {
-                let changeDay = plan[o]
+            for (let changeDay of plan) {
                 if (changeDay.isWorkday && !people.early.includes(changeDay.early)) {
                     let tmp = day.night
                     day.night = changeDay.early
@@ -116,8 +113,7 @@ function earlyNightMonthPlan(roughDate, people) {
         }
 
         if (day.isWorkday && people.night.includes(day.early)) {
-            for (let o = 0; o < plan.length; o++) {
-                let changeDay = plan[o]
+            for (let changeDay of plan) {
                 if (changeDay.isWorkday && !people.night.includes(changeDay.night)) {
                     let tmp = day.early
                     day.early = changeDay.night
